@@ -8,49 +8,68 @@ using UnityEngine.SceneManagement;
 public class MenuController : MonoBehaviour
 {
     [Header("Panels")]
-    public GameObject MainMenuPanel;
-    public GameObject OptionsPanel;
-    public GameObject CreditsPanel;
-    public GameObject PausePanel;
-    public GameObject InstructionsPanel;
-    public GameObject GamePanel;
-    public GameObject VideoPanel;
+    public GameObject MainUI;
+    public List<GameObject> panels = new List<GameObject>();
+    private GameObject MainMenuPanel;
+    private GameObject OptionsPanel;
+    private GameObject CreditsPanel;
+    private GameObject PausePanel;
+    private GameObject InstructionsPanel;
+    private GameObject GamePanel;
+    private GameObject VideoPanel;
 
     [Header("Sub-Panels")]
     //Maybe?
 
     [Header("Other")]
     public GameController gameController;
-    List<GameObject> gameObjects = new List<GameObject>();
-    public AudioMixer mixer;
     public AudioController audioController;
+    public AudioMixer mixer;
+    List<GameObject> gameObjects = new List<GameObject>();
     private int playing;
+
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
 
     private void Start()
     {
-        gameObject.SetActive(true);
-        gameObjects.Add(MainMenuPanel);
-        gameObjects.Add(OptionsPanel);
-        gameObjects.Add(CreditsPanel);
-        gameObjects.Add(PausePanel);
-        gameObjects.Add(InstructionsPanel);
-        gameObjects.Add(GamePanel);
-        gameObjects.Add(VideoPanel);
+        populatePanels();
         Disable();
-        MainMenuPanel.SetActive(true);
         Time.timeScale = 0;
         GameController.Instance.state = eState.TITLE;
         if (GameController.Instance.state == eState.TITLE)
         {
             VideoPanel.SetActive(true);
+            MainMenuPanel.SetActive(true);
         }
-        DontDestroyOnLoad(gameObject);
-        DontDestroyOnLoad(audioController);
     }
 
     private void OnEnable()
     {
         menuTrackPlayer();
+    }
+
+    private void populatePanels()
+    {
+        MainUI.SetActive(true);
+        RectTransform[] transforms = MainUI.GetComponentsInChildren<RectTransform>();
+        foreach (RectTransform child in transforms)
+        {
+            if (child.gameObject.CompareTag("UI"))
+            {
+                panels.Add(child.gameObject);
+                Debug.Log(child.name);
+                if (child.name == "MainMenuPanel") { MainMenuPanel = child.gameObject; }
+                if (child.name == "OptionsPanel") { OptionsPanel = child.gameObject; }
+                if (child.name == "CreditsPanel") { CreditsPanel = child.gameObject; }
+                if (child.name == "PausePanel") { PausePanel = child.gameObject; }
+                if (child.name == "InstructionsPanel") { InstructionsPanel = child.gameObject; }
+                if (child.name == "GamePanel") { GamePanel = child.gameObject; }
+                if (child.name == "VideoPanel") { VideoPanel = child.gameObject; }
+            }
+        }
     }
 
     private void menuTrackPlayer()
@@ -118,35 +137,9 @@ public class MenuController : MonoBehaviour
         }
     }
 
-    public void gameOverTrackPlayer()
-    {
-        audioController.Stop("Track" + playing);
-        audioController.Play("Track6");
-        Debug.Log("Track 6 played");
-        playing = 6;
-    }
-
-    public void AmbientOnePlayer()
-    {
-        audioController.Play("Amb1");
-        Debug.Log("Amb1 Played");
-    }
-
-    public void AmbientTwoPlayer()
-    {
-        audioController.Play("Amb2");
-        Debug.Log("Amb2 Played");
-    }
-
-    public void AmbientThreePlayer()
-    {
-        audioController.Play("Amb3");
-        Debug.Log("Amb3 Played");
-    }
-
     public void Disable()
     {
-        foreach (GameObject gameObject in gameObjects)
+        foreach (GameObject gameObject in panels)
         {
             gameObject.SetActive(false);
         }
@@ -232,6 +225,11 @@ public class MenuController : MonoBehaviour
     public void BackToMenu()
     {
         Disable();
+        if (SceneManager.GetActiveScene().name != "Main")
+        {
+            SceneManager.LoadScene("Main");
+        }
+        GamePanel.SetActive(false);
         MainMenuPanel.SetActive(true);
         GameController.Instance.state = eState.TITLE;
         if (GameController.Instance.state == eState.TITLE)
