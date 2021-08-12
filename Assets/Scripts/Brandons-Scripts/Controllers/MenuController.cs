@@ -3,10 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public class MenuController : MonoBehaviour
 {
+
+    #region Unity Editor Values
     [Header("Panels")]
     public GameObject MainUI;
     public List<GameObject> panels = new List<GameObject>();
@@ -27,6 +30,10 @@ public class MenuController : MonoBehaviour
     public AudioMixer mixer;
     List<GameObject> gameObjects = new List<GameObject>();
     private int playing;
+
+    #endregion
+
+    #region Start/Awake/Enable
 
     private void Awake()
     {
@@ -51,27 +58,9 @@ public class MenuController : MonoBehaviour
         menuTrackPlayer();
     }
 
-    private void populatePanels()
-    {
-        MainUI.SetActive(true);
-        RectTransform[] transforms = MainUI.GetComponentsInChildren<RectTransform>();
-        foreach (RectTransform child in transforms)
-        {
-            if (child.gameObject.CompareTag("UI"))
-            {
-                panels.Add(child.gameObject);
-                Debug.Log(child.name);
-                if (child.name == "MainMenuPanel") { MainMenuPanel = child.gameObject; }
-                if (child.name == "OptionsPanel") { OptionsPanel = child.gameObject; }
-                if (child.name == "CreditsPanel") { CreditsPanel = child.gameObject; }
-                if (child.name == "PausePanel") { PausePanel = child.gameObject; }
-                if (child.name == "InstructionsPanel") { InstructionsPanel = child.gameObject; }
-                if (child.name == "GamePanel") { GamePanel = child.gameObject; }
-                if (child.name == "VideoPanel") { VideoPanel = child.gameObject; }
-            }
-        }
-    }
+    #endregion
 
+    #region Audio
     private void menuTrackPlayer()
     {
         int trackPlay = UnityEngine.Random.Range(0, 2);
@@ -137,6 +126,31 @@ public class MenuController : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region Panel Changing
+
+    private void populatePanels()
+    {
+        MainUI.SetActive(true);
+        RectTransform[] transforms = MainUI.GetComponentsInChildren<RectTransform>();
+        foreach (RectTransform child in transforms)
+        {
+            if (child.gameObject.CompareTag("UI"))
+            {
+                panels.Add(child.gameObject);
+                Debug.Log(child.name);
+                if (child.name == "MainMenuPanel") { MainMenuPanel = child.gameObject; }
+                if (child.name == "OptionsPanel") { OptionsPanel = child.gameObject; }
+                if (child.name == "CreditsPanel") { CreditsPanel = child.gameObject; }
+                if (child.name == "PausePanel") { PausePanel = child.gameObject; }
+                if (child.name == "InstructionsPanel") { InstructionsPanel = child.gameObject; }
+                if (child.name == "GamePanel") { GamePanel = child.gameObject; }
+                if (child.name == "VideoPanel") { VideoPanel = child.gameObject; }
+            }
+        }
+    }
+
     public void Disable()
     {
         foreach (GameObject gameObject in panels)
@@ -195,7 +209,20 @@ public class MenuController : MonoBehaviour
         }
         Debug.Log("Credits menu");
     }
+    public void Pause()
+    {
+        if (GameController.Instance.state == eState.GAME)
+        {
+            Time.timeScale = 0;
+            Disable();
+            PausePanel.SetActive(true);
+            GameController.Instance.state = eState.PAUSE;
+        }
+    }
 
+    #endregion
+
+    #region Back
     public void Back()
     {
         Disable();
@@ -207,17 +234,6 @@ public class MenuController : MonoBehaviour
         else
         {
             BackToMenu();
-        }
-    }
-
-    public void Pause()
-    {
-        if (GameController.Instance.state == eState.GAME)
-        {
-            Time.timeScale = 0;
-            Disable();
-            PausePanel.SetActive(true);
-            GameController.Instance.state = eState.PAUSE;
         }
     }
 
@@ -246,6 +262,9 @@ public class MenuController : MonoBehaviour
         GameController.Instance.state = eState.PAUSE;
     }
 
+    #endregion
+    
+    #region Set Audio Levels
     public void SetLevelMST(float sliderValue)
     {
         mixer.SetFloat("MST", Mathf.Log10(sliderValue) * 20);
@@ -275,6 +294,9 @@ public class MenuController : MonoBehaviour
         else mixer.SetFloat("MST", 0);
     }
 
+    #endregion
+
+    #region Reset/Exit Game
     public void ResetApplication()
     {
         SceneManager.LoadScene("Main");
@@ -284,5 +306,7 @@ public class MenuController : MonoBehaviour
     {
         Application.Quit();
     }
+
+    #endregion
 
 }
