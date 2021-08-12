@@ -38,6 +38,7 @@ public class MenuController : MonoBehaviour
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
+        audioController = GameObject.Find("Controllers").GetComponent<AudioController>();
     }
 
     private void Start()
@@ -51,11 +52,12 @@ public class MenuController : MonoBehaviour
             VideoPanel.SetActive(true);
             MainMenuPanel.SetActive(true);
         }
+        menuTrackPlayer();
     }
 
     private void OnEnable()
     {
-        menuTrackPlayer();
+        
     }
 
     #endregion
@@ -63,67 +65,70 @@ public class MenuController : MonoBehaviour
     #region Audio
     private void menuTrackPlayer()
     {
-        int trackPlay = UnityEngine.Random.Range(0, 2);
-        if (trackPlay == 1)
-        {
-            audioController.Play("Track10");
-            Debug.Log("Track 10 played");
-            playing = 10;
-        }
-        else
-        {
-            audioController.Play("Track7");
-            Debug.Log("Track 7 played");
-            playing = 7;
-        }
+        //int trackPlay = UnityEngine.Random.Range(0, 2);
+        //if (trackPlay == 1)
+        //{
+        //    audioController.Play("Track10");
+        //    Debug.Log("Track 10 played");
+        //    playing = 10;
+        //}
+        //else
+        //{
+        //    audioController.Play("Track7");
+        //    Debug.Log("Track 7 played");
+        //    playing = 7;
+        //}
+        //audioController.Stop("Track1");
+
+        audioController.Play("Track1");
     }
 
     private void sceneTrackPlayer()
     {
-        audioController.Stop("Track" + playing);
-        int trackPlay = UnityEngine.Random.Range(0, 2);
-        if (trackPlay == 1)
-        {
-            audioController.Play("Track5");
-            playing = 5;
-            Debug.Log("Track 5 played");
-        }
-        else
-        {
-            audioController.Play("Track9");
-            playing = 9;
-            Debug.Log("Track 9 played");
-        }
+        //audioController.Stop("Track" + playing);
+        //int trackPlay = UnityEngine.Random.Range(0, 2);
+        //if (trackPlay == 1)
+        //{
+        //    audioController.Play("Track5");
+        //    playing = 5;
+        //    Debug.Log("Track 5 played");
+        //}
+        //else
+        //{
+        //    audioController.Play("Track9");
+        //    playing = 9;
+        //    Debug.Log("Track 9 played");
+        //}
     }
 
     private void gameTrackPlayer()
     {
-        audioController.Stop("Track" + playing);
-        int trackPlay = UnityEngine.Random.Range(0, 4);
-        if (trackPlay == 1)
-        {
-            audioController.Play("Track1");
-            Debug.Log("Track 1 played");
-            playing = 1;
-        }
-        else if (trackPlay == 2)
-        {
-            audioController.Play("Track2");
-            Debug.Log("Track 2 played");
-            playing = 2;
-        }
-        else if (trackPlay == 3)
-        {
-            audioController.Play("Track3");
-            Debug.Log("Track 3 played");
-            playing = 3;
-        }
-        else
-        {
-            audioController.Play("Track4");
-            Debug.Log("Track 4 played");
-            playing = 4;
-        }
+        //audioController.Stop("Track" + playing);
+        //int trackPlay = UnityEngine.Random.Range(0, 4);
+        //if (trackPlay == 1)
+        //{
+        //    audioController.Play("Track1");
+        //    Debug.Log("Track 1 played");
+        //    playing = 1;
+        //}
+        //else if (trackPlay == 2)
+        //{
+        //    audioController.Play("Track2");
+        //    Debug.Log("Track 2 played");
+        //    playing = 2;
+        //}
+        //else if (trackPlay == 3)
+        //{
+        //    audioController.Play("Track3");
+        //    Debug.Log("Track 3 played");
+        //    playing = 3;
+        //}
+        //else
+        //{
+        //    audioController.Play("Track4");
+        //    Debug.Log("Track 4 played");
+        //    playing = 4;
+        //}
     }
 
     #endregion

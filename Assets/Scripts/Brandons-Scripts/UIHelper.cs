@@ -12,4 +12,10 @@ public class UIHelper : MonoBehaviour
         menuController.Back();
         SceneManager.MoveGameObjectToScene(scene.gameObject, SceneManager.GetActiveScene());
     }
+
+    public void Play()
+    {
+        MenuController menuController = GameObject.Find("Controllers").GetComponent<MenuController>();
+        menuController.audioController.Play("buttonClick");
+    }
 }
