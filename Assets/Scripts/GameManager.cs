@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
 using Photon.Pun;
 using Photon.Realtime;
 
@@ -81,6 +80,12 @@ namespace gameProject
         public void LeaveRoom()
         {
             PhotonNetwork.LeaveRoom();
+            Transform scene = GameObject.Find("Scene").GetComponent<Transform>();
+            //MenuController menuController = GameObject.Find("Controllers").GetComponent<MenuController>();
+            //menuController.Back();
+            SceneManager.MoveGameObjectToScene(scene.gameObject, SceneManager.GetActiveScene());
+
+
         }
     }
 }

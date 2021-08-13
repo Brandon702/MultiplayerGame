@@ -60,6 +60,15 @@ public class MenuController : MonoBehaviour
         
     }
 
+    private void Update()
+    {
+        if(GameController.Instance.state == eState.GAME && GamePanel.active == false)
+        {
+            Debug.Log("It worked");
+            GamePanel.SetActive(true);
+        }
+    }
+
     #endregion
 
     #region Audio
@@ -218,7 +227,8 @@ public class MenuController : MonoBehaviour
     {
         if (GameController.Instance.state == eState.GAME)
         {
-            Time.timeScale = 0;
+            //Disabled timescale since its an action based multiplayer game
+            Time.timeScale = 1;
             Disable();
             PausePanel.SetActive(true);
             GameController.Instance.state = eState.PAUSE;

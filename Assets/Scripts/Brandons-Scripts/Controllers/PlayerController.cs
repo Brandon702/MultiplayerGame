@@ -55,29 +55,29 @@ namespace Assets.Scripts
         {
             //if (GameController.Instance.state == eState.GAME)
             {
-                if (Input.GetKeyDown(KeyCode.D))
+                if (Input.GetKeyDown(KeyCode.W))
                 {
-                    moving = new Vector2(1, 0);
+                    moving = new Vector3(1, 0, 0);
                 }
 
-                if (Input.GetKeyDown(KeyCode.A))
+                if (Input.GetKeyDown(KeyCode.S))
                 {
-                    moving = new Vector2(-1, 0);
+                    moving = new Vector3(-1, 0, 0);
                 }
 
                 if(Input.GetKeyUp(KeyCode.D))
                 {
-                    moving = new Vector2(0, 0);
+                    moving = new Vector3(0, 0, 1);
                 }
 
                 if (Input.GetKeyUp(KeyCode.A))
                 {
-                    moving = new Vector2(0, 0);
+                    moving = new Vector3(0, 0,-1);
                 }
 
                 if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P))
                 {
-                    moving = new Vector2(0, 0);
+                    moving = new Vector3(0, 0);
                     menuController.Pause();
                 }
             }

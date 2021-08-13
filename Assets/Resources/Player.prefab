@@ -112,7 +112,8 @@ GameObject:
   - component: {fileID: 337130830}
   - component: {fileID: 1085615168}
   - component: {fileID: 3624090080383571987}
-  - component: {fileID: 8020119860111748666}
+  - component: {fileID: 4650831863473338316}
+  - component: {fileID: 5719241994303516138}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -263,7 +264,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7093543972537099114}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 827b2692c0a74d849ada6f396e02ab8d, type: 3}
   m_Name: 
@@ -286,7 +287,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 10
   PlayerUiPrefab: {fileID: 1103018388248252275, guid: 1a8ae1681d1bca94c91067891c3b5898, type: 3}
---- !u!114 &8020119860111748666
+--- !u!114 &4650831863473338316
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -295,7 +296,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 7093543972537099114}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30157089d1197a1448af18644dc23f92, type: 3}
+  m_Script: {fileID: 11500000, guid: 05348c0ebf570ff4e9661ab8742eac22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  bulletPrefab: {fileID: 4898648862356197710, guid: 12ea08c5397494e4b82f3df8456db288, type: 3}
+  weaponLocation: {fileID: 584763861}
+  speed: 10
+--- !u!114 &5719241994303516138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7093543972537099114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f686498ec6ca964aa3879e249154c3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 7486864269464493610}
+  smoothSpeed: 0.125
+  offset: {x: 0, y: 0, z: 0}
