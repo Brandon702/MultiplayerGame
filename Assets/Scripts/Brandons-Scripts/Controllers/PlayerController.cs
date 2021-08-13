@@ -9,45 +9,51 @@ namespace Assets.Scripts
     public class PlayerController : MonoBehaviour
     {
         //private InputSystem playerInput;
-        private Rigidbody2D rb;
-        public Animator animator;
+        //private Rigidbody2D rb;
+        //public Animator animator;
         SpriteRenderer spriteRenderer;
         private MenuController menuController;
-        public PlayerController player;
-        [SerializeField] public float speed = 5f;
+        //public PlayerController player;
+        public float speed = 5f;
         private Vector2 moving;
-        public GameObject text;
+        //public GameObject text;
+
+        CharacterController characterController;
+
 
         void Awake()
         {
+            characterController = GetComponent<CharacterController>();
             //playerInput = new InputSystem();
-            rb = GetComponent<Rigidbody2D>();
-            spriteRenderer = GetComponent<SpriteRenderer>();
-            player = GetComponent<PlayerController>();
-            menuController = GameObject.Find("MenuController").GetComponent<MenuController>();
-            text.SetActive(false);
+            //rb = GetComponent<Rigidbody2D>();
+            //spriteRenderer = GetComponent<SpriteRenderer>();
+            //player = GetComponent<PlayerController>();
+            //menuController = GameObject.Find("MenuController").GetComponent<MenuController>();
+            //text.SetActive(false);
         }
 
         void FixedUpdate()
         {
-            if (GameController.Instance.state == eState.GAME)
+            //if (GameController.Instance.state == eState.GAME)
             {
                 //Vector2 moveInput = playerInput.Player.Move.ReadValue<Vector2>();
                 //rb.velocity = moveInput * speed;
+                //Debug.Log(moving);
 
-                rb.velocity = speed * moving;
+                characterController.Move(speed * moving);
+                //rb.velocity = speed * moving;
 
-                animator.SetFloat("Speed", rb.velocity.magnitude);
+                //animator.SetFloat("Speed", characterController.velocity.magnitude);
 
-                if (rb.velocity.x > 0) spriteRenderer.flipX = false;
-                if (rb.velocity.x < 0) spriteRenderer.flipX = true;
+                //if (rb.velocity.x > 0) spriteRenderer.flipX = false;
+                //if (rb.velocity.x < 0) spriteRenderer.flipX = true;
             }
 
         }
 
         private void Update()
         {
-            if (GameController.Instance.state == eState.GAME)
+            //if (GameController.Instance.state == eState.GAME)
             {
                 if (Input.GetKeyDown(KeyCode.D))
                 {
@@ -75,10 +81,10 @@ namespace Assets.Scripts
                     menuController.Pause();
                 }
             }
-            else
-            {
-                moving = new Vector2(0, 0);
-            }
+            //else
+            //{
+            //    moving = new Vector2(0, 0);
+            //}
         }
     }
 }
